@@ -2,9 +2,19 @@
   "name": "nodejs",
   "version": "1.0.0",
   "description": "Tuto Node JS",
-  "main": "index.js",
+  "watch": {
+    "index": {
+      "extensions": "js",
+      "ignore": "node_modules",
+      "quiet": true,
+      "legacyWatch": true,
+      "delay": 1000,
+      "runOnChangeOnly": false
+    }
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch": "npm-watch"
   },
   "repository": {
     "type": "git",
@@ -17,6 +27,7 @@
   },
   "homepage": "https://github.com/DamienSTO/nodejs#readme",
   "dependencies": {
-    "fs": "^0.0.1-security"
+    "fs": "^0.0.1-security",
+    "npm-watch": "^0.11.0"
   }
 }
