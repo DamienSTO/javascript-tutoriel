@@ -165,3 +165,32 @@ on va utilisre ça sur les objet/ classe qu'on va createServer
 
 fonction flèché n'alter pas avec this 
 ça retourne directement, c'est plus concis 
+
+
+FUNCTION :
+
+split : ça prend un paterne et ca divise la chaine avec ce paterne . ( ça converti une chaine de caractere en tableau)
+
+slit : Bonjour == [B,o,n,j,o,u,r]
+reverse : [B,o,n,j,o,u,r] == [r,u,o,j,n,o,B]
+join : [B,o,n,j,o,u,r] == Bonjour
+
+
+function isPalindrome (word){
+            const lettre = word.split('')
+            lettre.reverse()
+            let lettreI = lettre.join('')
+            console.log(lettreI)
+            if (word.toUpperCase() === lettreI.toUpperCase()){
+                    console.log("c'est un palindrome")
+                }else{
+                    console.log("Ce n'est pas un palindrome")
+                }
+PLUS SIMPLE 
+
+function isPalindrome (word){
+    const LettreI = word
+        .split('')
+        .reverse()
+        .join('')
+    return word.toUpperCase() === LettreI.toUpperCase()
