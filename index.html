@@ -6,48 +6,36 @@
 
     </title>
     <script>
-    
-
-        class Rectangle {
-            constructor (width, height){
-                if(width <= 0 || height <= 0){
-                    throw new Error(`Impossible d'avoir des formes geometrique avec eds valeurs négatives`)
-                }
-                this.width = width
-                this.height = height
-            }
-            get perimeter (){
-                return (this.width + this.height)*2
-            }
-            get isValid (){
-                return this.width > 0 && this.height > 0
-            }
-
-            isBiggerThan (shape){
-                return this.perimeter > shape.perimeter
-            }
-        }
-
-        class Square extends Rectangle {
-            constructor(width){
-                super(width,width)
-            }
         
-        }
-        function promptRectangle(){
-            try{
-                const width = parseInt(prompt('Largeur'),10)
-                const height =  parseInt(prompt('Largeur'),10)
-                const r = new Rectangle(width,height)
-                console.log(r.perimeter)
-            
-            }catch(e){
-                throw new Error('Entrer utlisateur invalide')
-                
-            }
-        
-        }
-        
+        const p = new Promise((resolve,reject) => {
+            resolve(4)
+        })
+
+        function wait(duration){
+            return new Promise((resolve, reject) =>
+                setTimeout(() => {
+                    resolve(duration)
+                }, duration )
+
+            )}
+
+            function waitFail(duration){
+            return new Promise((resolve, reject) =>
+                setTimeout(() => {
+                    reject(duration)
+                }, duration )
+
+            )}
+
+
+        wait(2000)
+                .then(()=> {
+                    console.log('Attente 2s')
+                    return wait(2000)
+                })
+                .then(() =>{
+                    console.log('Attente 1s')
+                })
         
     </script>
 </head>
