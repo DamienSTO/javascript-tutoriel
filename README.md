@@ -194,3 +194,573 @@ function isPalindrome (word){
         .reverse()
         .join('')
     return word.toUpperCase() === LettreI.toUpperCase()
+
+EXERCICE D'AUJOURD'HUI 
+
+
+    const phrase = `Assemblage oral ou écrit capable de représenter l'énoncé complet d'une idée.
+La phrase peut consister en un mot unique (ex. Viens !), mais contient habituellement un second terme qui est le sujet de l'énoncé (ex. Tu viens ?).`
+        const frequence = {}
+        const mots = phrase
+            .toLowerCase()
+            .replaceAll(',','')
+            .replaceAll('!','')
+            .replaceAll('?','')
+            .replaceAll('(','')
+            .replaceAll(')','')
+            .replaceAll('"','')
+            .split(' ')
+        for(let mot of mots){
+            if (mot !==''){
+                if(frequence[mot]){
+                    frequence[mot]++
+                }else{
+                    frequence[mot] = 1
+                }
+            }
+
+        }
+        const frequenceA = []
+        for(let k in frequence){
+            frequenceA.push({
+                mot: k,
+                count:frequence[k]
+            })
+        }
+        frequenceA.sort((a,b) => b.count - a.count)
+        console.log(frequenceA)
+        console.log(`les mots les plus fréquents sont : ${frequenceA[0].mot}, ${frequenceA[1].mot},${frequenceA[2].mot}`)
+
+
+/*
+            const students = [
+                {
+                    name: 'John',
+                    notes: [1,20,18,19,12]
+                },
+                {
+                    name: 'Sophie',
+                    notes: [17,12,14,15,13]
+                },
+                {
+                    name: 'Barbara',
+                    notes: [18,17,18,19,12]
+                },
+                {
+                    name: 'Manon',
+                    notes: [2,7,10,15,14]
+                },
+                {
+                    name: 'Jane',
+                    notes: [17,18,3,11,5]
+                }
+
+            ]
+
+            const Moyenne = (notes) => {
+                let sum = 0
+                for (let note of notes){
+                    sum = sum + note
+                }
+                return sum / notes.length 
+            }
+            
+            for (let student of students){
+                student.Moyenne = Moyenne(student.notes)
+                student.plusnul = Math.min(...student.notes)
+                student.meilleur = Math.max(...student.notes)
+            }
+
+            const cStudents = (a,b) =>{
+                return b.Moyenne - a.Moyenne
+            }
+
+            students.sort(cStudents)
+
+            const podium = (student) =>{
+                return `${student.name} avec une moyenne de ${student.Moyenne}, meilleur note ${student.meilleur}, pire note (${student.plusnul})`
+            }
+
+            console.log(`Top 3 étudiant
+                1:${podium(students[0])}
+                2:${podium(students[1])}
+                3:${podium(students[2])}
+            `)
+
+            console.log(students)
+
+
+
+
+        /*
+            function isPalindrome (word){
+                 const LettreI = word
+                    .split('')
+                    .reverse()
+                    .join('')
+                if (word.toUpperCase() === LettreI.toUpperCase()){
+                    console.log("c'est un palindrome")
+                }else{
+                    console.log("Ce n'est pas un palindrome")
+                }
+            
+        }
+
+        const words = {
+            kayak: true,
+            SOS: true,
+            Kayak: true,
+            Bonjour: false,
+        }
+        for (let word in words){
+            if (isPalindrome(word)!== words[word]){
+                console.error(`isPalindrome(${word})`)
+            }
+        }
+        */
+
+        CLASSE / PROTOTYPE :
+
+        
+        const Moyenne = (notes) => {
+            let sum = 0
+            for (let note of notes){
+                sum = sum + note
+            }
+            return sum / notes.length
+        }
+       
+        class Student {
+            ecole = 'Michelet'
+            constructor (prenom,nom){
+                this.prenom = prenom
+                this.nom = nom
+            }
+            setNotes (notes){
+                this.notes = notes
+            }
+
+            canPass (){
+                return Moyenne(this.notes) >= 10
+
+            }
+        }
+
+        const john = new Student('John', 'Doe')
+        const jane = new Student('Jane', 'Doe')
+        john.notes = ([10,10,9])
+        jane.setNotes([15,18,19])
+        console.log(john.canPass(),jane.canPass())
+
+        const Moyenne = (notes) => {
+            let sum = 0
+            for (let note of notes){
+                sum = sum + note
+            }
+            return sum / notes.length
+        }
+       
+        class Student {
+            ecole = 'Michelet'
+            constructor (prenom,nom){
+                this.prenom = prenom
+                this.nom = nom
+            }
+            set notes (v) {
+            if (Array.isArray(v)){
+                this._notes = v
+            }
+            }
+            
+            get name (){
+                return `${this.prenom} ${this.nom}`
+            }
+            canPass (){
+                return Moyenne(this._notes) >= 10
+
+            }
+        }
+
+        const john = new Student('John', 'Doe')
+        const jane = new Student('Jane', 'Doe')
+        john.notes = [19]
+        jane.notes = [15,18,19]
+        console.log(john.name)
+
+
+        extend ça rajoute un prototype
+
+        TP CLASS :
+        class Livre {
+            #page = 1
+            constructor(title,pages){
+                this.title = title
+                this.pages = pages
+                
+            }
+            get page (){
+                return this.#page
+            }
+
+            nextPage(){
+                if(this.#page < this.pages){
+                    this.#page++
+                }
+            }
+            close(){
+                this.#page = 1
+            }
+        }
+
+        class Library {
+
+            #books = []
+            
+            addBook(book){
+                this.#books.push(book)
+            }
+            addBooks(books){
+                for(let book of books){
+                    this.addBook(book)
+                }
+            }
+            findBooksByLetter(letter){
+                const found = []
+                for(let book of this.#books){
+                    if(book.title[0].toLowerCase() === letter.toLowerCase())
+                    found.push(book)
+                }
+                return found
+            }
+                
+        }
+
+        const b = new Livre(`Seigneur des anneaux`, 200);
+        console.log(b.page)
+        b.nextPage()
+        console.log(b.page)
+        b.close()
+        console.log(b.page)
+
+        const l = new Library()
+        l.addBook(b)
+        l.addBooks([
+        new Livre('Ready player one', 100),
+        new Livre('Oui-oui', 10),
+        new Livre('Sillage', 50),
+        ])
+        console.log(l.findBooksByLetter('S'))
+
+
+        /*
+        class Rectangle {
+            constructor (width, height){
+                this.width = width
+                this.height = height
+            }
+            get perimeter (){
+                return (this.width + this.height)*2
+            }
+            get isValid (){
+                return this.width > 0 && this.height > 0
+            }
+
+            isBiggerThan (shape){
+                return this.perimeter > shape.perimeter
+            }
+        }
+
+        class Square extends Rectangle {
+            constructor(width){
+                super(width,width)
+            }
+        
+        }
+        
+
+        const r = new Rectangle(10,20);
+        console.log(r.perimeter)
+        console.log(r.isValid)
+        const r2 = new Rectangle(-10,20);
+        console.log(r2.isValid)
+        const c = new Square(10);
+        console.log(c.perimeter)
+        console.log(c.isBiggerThan(r))
+        */
+
+
+        EXCEPTION JAVASCIPT
+  
+        ça coupe entierement le script 
+
+        class Square extends Rectangle {
+            constructor(width){
+                super(width,width)
+            }
+        
+        }
+        try{
+            const r = new Rectangle(-10,20)
+        } catch(e){
+            console.log(e.message)
+        }
+
+        PromptError 
+
+        pour verifier err classi ou prompt on met if(e instanceof promptError){
+        
+        }else{
+            console.log('Erreur classique')
+        }
+
+
+        METHODES ;
+
+        at : recupere un index particulier ( peut aussi negative)
+        concat : peut concatener des tableau ensemble pour les fusionner 
+        fill : remplie des tableaux avec valeau precises
+        filter : filtre les resultats (ex :
+        const notes = [12,10,17,9]
+        const bonnenotes = notes.filter((note) => note >= 10)
+        console.log(bonnenotes)   
+        )
+
+        find : renvoye le premiere element de la condition 
+
+        findIndex : renvye l'index du premiere element de la condition.
+
+        findLast : bref t'as compris quoi c'est l'inverse.
+
+        findLastIndex : la même chose.
+
+        ForEach : affiche l'element et l'index .
+
+        from : ...from('foo') = ["f","o","o"]
+
+        includes : repond true ou false pour voir si quelque chose se trouve dans un tableau.
+
+        indexOf : on lui passe une valeur et nous renvoye son index .
+
+        join : ça permet de joindre les caracteère avec different type de liaison. 
+
+        map : applique une fonction a chaque element 
+        (ex : 
+        const array1 = [1,4,9,16]
+        const map1 = array1.map(x => x * 2));
+        == [2,8,18,32]
+
+        pop : retire le derniere element de la liste.
+
+        push : envoye un nouvelle element dans le tableau 
+
+        reduce : reduit les differentes valeurs et obtenir qu'une valeur en sortie.
+
+        reduceRight : droite a gauche 
+
+        slice : recupere une parti d'un tableau . ( ça crée un nouveau tableau)
+
+        unshift : insert des eleement au début des tableau.
+
+        METHODE OBJET :
+
+        assign : assigne les propriété d'un objet a un autre objet.
+
+        create : crée un nouvel objet en utilisant le prototype d'un autre objet.
+
+        defineProperties : definir la propriété dans un objet.
+
+        entries : renvoye un tableau avec les cléfs et les valeurs.
+
+        freeze : gele un objet pour que celui-ci ne puisse plus etre modifier 
+
+
+        keys : donne un tableau de toutes les cléfs.
+
+        values : donne un tableau avec toutes les valeurs.
+
+
+        SUCRE SYNTAXIQUE :
+
+        ex :
+        let i = 0
+
+        i++
+
+        +=
+        *=
+        /=
+
+        const double = n => n * 2
+        console.log(double(3))
+
+        const a = 3
+        const b = a || 5
+        console.log(b)
+        renvoye 3
+        si a = 0 
+        renvoye 5
+
+        let a 
+        const b = a ?? 5
+        renvoye 5
+
+        let a = null 
+        a ??= 3 
+        met 3 dans a
+
+        let a = 0
+        a ||= 3 
+        met 3 dans a que si c'est 0
+
+
+        const person = {firstname: 'John'}
+        console.log(person?.age?.toString())
+        quand on met ? permet de voir si jamais ça existe .
+
+        const [premierNote, secondesNote] = [12,17,18]
+        ça donne 12 et 17
+
+        const [premierNote, ...autreNotes] = [12,17,18]
+        ça donne la premiere et les autres notes.
+
+        TIMER :
+
+        function wait(duration) {
+        const t = Date.now()
+        while(Date.now() - t < duration){
+            
+        }
+        
+    }
+    
+    function message(nombre)  {
+        for (let i = nombre; i >= 0; i--) {
+            wait(1000)
+            console.log(i)
+            
+        }
+    }
+    message(10);
+
+
+    PROMISES :
+
+
+     const p = new Promise((resolve,reject) => {
+            resolve(4)
+        })
+
+        p.then((e) => {
+            console.log('le nombre', e)
+            throw new Error('echec')
+        })
+        .then((e) => console.log('Le nombre 2',e))
+        .catch((e) => {
+            console.log('Erreur', e)
+            return 2
+        })
+        .then(n => console.log(2))
+        .finally(() => console.log("aaa"))
+
+
+
+        const p = new Promise((resolve,reject) => {
+            resolve(4)
+        })
+
+        function wait(duration){
+            return new Promise((resolve, reject) =>
+                setTimeout(() => {
+                    resolve(duration)
+                }, duration )
+
+            )}
+
+            function waitFail(duration){
+            return new Promise((resolve, reject) =>
+                setTimeout(() => {
+                    reject(duration)
+                }, duration )
+
+            )}
+
+
+        wait(2000)
+                .then(()=> {
+                    console.log('Attente 2s')
+                    return wait(2000)
+                })
+                .then(() =>{
+                    console.log('Attente 1s')
+                })
+        
+
+        allSettled : ignore les promesses qui echoue.
+
+    any : donne le resultat de la premiere qui reussis.
+
+    race : si la premiere promesses echoue alors ça echoue.
+
+    async function main(){
+                const duration = await wait(2000)
+                console.log(`Duration ${duration}`)
+                return 5
+            }
+        
+            const p = new Promise((r) => {
+                console.log('Hello')
+                r(2)
+            })
+            p.then(() => console.log('then'))
+            waitSync(2000)
+            console.log('les gens')
+
+
+        FETCH :
+
+
+        text : retourne une promesse.
+
+        json : renvoye le corp de la réponse parsé en json 
+
+        async function fetchuser (){
+            const r = await fetch('https://jsonplaceholder.typicode.com/users',{
+                method: 'POST',
+                headers: {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({title: 'Mon premier'})
+            }
+            )
+            if (r.ok === true){
+                return r.json();
+            }
+            throw new Error('Impossible de contacter le serveur ')
+        }
+        fetchuser().then(users => console.log(users))
+
+
+        differentes option qu'on peut utiliser sur fetch :
+
+        redirecte : specifie comment on doit suivre notre redirection .
+
+
+        headers : renvoye un objet de tye headers qui va contenir les differente entete.
+
+
+        request : objet qui peut representer la requete.
+
+        arreter un fetch : 
+
+        
+
+
+
+
+
+
+
+
+
+

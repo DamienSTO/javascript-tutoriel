@@ -5,43 +5,24 @@
     <title>CHROME
 
     </title>
-    <script>
-        
-        const p = new Promise((resolve,reject) => {
-            resolve(4)
-        })
-
-        function wait(duration){
-            return new Promise((resolve, reject) =>
-                setTimeout(() => {
-                    resolve(duration)
-                }, duration )
-
-            )}
-
-            function waitFail(duration){
-            return new Promise((resolve, reject) =>
-                setTimeout(() => {
-                    reject(duration)
-                }, duration )
-
-            )}
-
-
-        wait(2000)
-                .then(()=> {
-                    console.log('Attente 2s')
-                    return wait(2000)
-                })
-                .then(() =>{
-                    console.log('Attente 1s')
-                })
-        
-    </script>
-</head>
-
+    <script src="./app.js" type ="module" ></script>
+    <style>
+        .red{
+            color: red;
+        }
+        .bold{
+            font-weight: bold;
+        }
+    </style>
 <body>
-    <h1> </h1>
+    <div id="Hello">
+        Bonjour les g
+    </div>
+    <ul>
+        <li style="color:red"> eret trrthyryr yr yryryr nyrn yr</li>
+        <li> eret trrthyryr yr yryryr nyrn yr</li>
+        <li> eret trrthyryr yr yryryr nyrn yr</li>
+    </ul>
 </body>
 
 </html>
