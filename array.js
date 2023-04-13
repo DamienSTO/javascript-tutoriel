@@ -1,0 +1,2 @@
+const damien = {};
+damien.assign()
