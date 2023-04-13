@@ -517,8 +517,11 @@ La phrase peut consister en un mot unique (ex. Viens !), mais contient habituell
         METHODES ;
 
         at : recupere un index particulier ( peut aussi negative)
+
         concat : peut concatener des tableau ensemble pour les fusionner 
+
         fill : remplie des tableaux avec valeau precises
+
         filter : filtre les resultats (ex :
         const notes = [12,10,17,9]
         const bonnenotes = notes.filter((note) => note >= 10)
@@ -533,11 +536,15 @@ La phrase peut consister en un mot unique (ex. Viens !), mais contient habituell
 
         findLastIndex : la même chose.
 
-        ForEach : affiche l'element et l'index .
-
         from : ...from('foo') = ["f","o","o"]
 
+        ForEach : ça boucle dans la liste et donne accès a l'element et son index  .
+        foo.forEach((e, i) => {
+            console.log(`element = ${e}, index = ${i}`);
+        })
+
         includes : repond true ou false pour voir si quelque chose se trouve dans un tableau.
+        foo.includes("f")
 
         indexOf : on lui passe une valeur et nous renvoye son index .
 
@@ -753,9 +760,385 @@ La phrase peut consister en un mot unique (ex. Viens !), mais contient habituell
 
         arreter un fetch : 
 
+        const a = new AbortController()
+    Promise.race([
+        fetch('https://jsonplaceholder.typicode.com/posts/?_limit=5&_delay=2000',{
+            signal: a.signal
+
+        }),
+        fetch('https://jsonplaceholder.typicode.com/users/?_limit=3',{
+            signal: a.signal
+        })
+    ]).then(r => r.json()).then(body => {
+        a.abort()
+        console.log(body)
         
+    })
 
 
+    Les modules :
+
+    export dans le fichier java et import dans l'index html.
+
+    import * as A from './array.js' ça import tout est nommé A mais c'est pas trop conseiller c'est mieux un par un .
+
+    L'objet Date :
+
+    Va nous permettre de representer une date et en interne c'est representer sous forme de nombre de secondes ( js minisecondes)
+
+    un constructor = date()
+
+    gethours = pour recuperer les heures 
+
+    getdate pour les jours.
+
+    toUTCString() renvoye jour heures.
+
+    ToLacalDateString() ça met le jour france et on peut mettre en parametre l'endroit.
+
+    toLocalString() date et temps
+
+    toLocalString()(undefined,{dateStyle: 'long', timeStyle:'long'}) = date de l'ordianteur . 
+
+    to localtimestring() heure minute seconde 
+
+
+     ajouter un jour au jour d'aujourd'hui
+    function addDays(date, days){
+            const newDate = new Date(date.getTime())
+            newDate.setDate(date.getDate() + days)
+            return newDate
+        }
+        const today = new Date()
+        const tomorrow = addDays(today,1)
+        console.log(today)
+        console.log(tomorrow)
+    </script>
+
+
+
+function addDays(date, days){
+            const newDate = new Date(date.getTime())
+            newDate.setDate(date.getDate() + days)
+            return newDate
+        }
+        const MONTHS = 1
+        const DAYS = 2
+        const YEARS = 0
+
+        function addInterval(date, n , unit){
+            const parts = [
+                date.getFullYear(),
+                date.getMonth(),
+                date.getDate(),
+                date.getHours(),
+                date.getMinutes(),
+                date.getSeconds(),
+                date.getMilliseconds(),
+        ]
+            const newDate = new Date(date.getTime())
+            switch (unit){
+                case DAYS:
+                    newDate.setDate(newDate.getDate() + n)
+                    break;
+                case MONTHS:
+                    newDate.setMonth(newDate.getMonth() + n)
+                    break;
+                case YEARS:
+                    newDate.setYear(newDate.getFullYear() + n)
+                    break;
+            }
+            return newDate
+        }
+        const today = new Date()
+        const tomorrow = addInterval(today, 3, YEARS)
+        console.log(today)
+        console.log(tomorrow)
+
+
+
+        or(const [unit, value] of Object.entries(interval)){
+                parts[unit] += value
+            }
+            
+            return new Date(...parts)
+        }
+        const today = new Date()
+        const tomorrow = addInterval(today,{
+            [MONTHS]: 2,
+            [DAYS]: 1,
+        })
+
+        Front-end ou Back-end ?
+
+
+        JS COTE NAVIGATEUR :
+
+
+        <script src="./app.js" > avec du  coup un autre fichier js
+
+
+        defer ça charge le js dès qu'il a le temps par contre il n'execute le code qu'a la fin du chargement de la page
+
+        <script src="./app.js" defer >
+
+        <script src="./app.js" type="module" defer >
+        ça va supporter les module sans ça on peut pas.
+
+        window pour mettre des variables global .
+
+        meme effet que var 
+
+        c'est mieux d'utiliser en type module.
+
+        alert ça affiche un message.
+
+
+        MANIPULER LE DOM :
+
+        queryselector : renvoye un element sur lequel on pourra faire differente chose 
+        queryselectorall on peut selectionner plusieurs choses.
+
+        textcontent renvoye le texte en respectant les espaces meme les hidden 
+
+        innerHTML juste ce que les utilisateur vont voirs.*
+
+        setAttribute met element 
+
+        removeAttribute enleve element.
+
+
+        DOMTokenList.toggle() : permet de manipuler une list d'element ( remove surpimmer une classe, toggle : supprimer si existe pas ajoute si oui, add : rajoute )
+
+        children = html collection avec des enfants.
+
+
+        async function main(){
+        const wrapper = document.querySelector('#lastPosts')
+        const loader = document.createElement('p')
+        loader.innerText = 'Chargement...'
+        wrapper.append(loader)
+        try{
+            const r = await fetch('https://jsonplaceholder.typicode.com/posts/?_limit=5',{
+                headers:{
+                    Accept: 'application/json'
+            }
+        })
+     
+        if (!r.ok){
+            throw new Error('Error serveur')
+        }
+        const posts = await r.json()
+        loader.remove()
+        } catch(e){
+            loader.innerText = 'Impossible'
+            loader.style.color = 'red'
+            return
+    }
+}
+
+main()
+
+
+
+TODO LIST :
+
+<!DOCTYPE html>
+<html lang="fr"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TodoList</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+    <script src="app.js" type="module" defer>
+
+    </script>
+</head>
+<body>
+
+    <section class="container pt-5" id="todolist">
+        <form class="d-flex pb-4">
+            <input required="" class="form-control" type="text" placeholder="Acheter des patates..." name="title" data-com.bitwarden.browser.user-edited="yes">
+            <button class="btn btn-primary">Ajouter</button>
+        </form>
+        <main>
+            <div class="btn-group mb-4" role="group">
+                <button type="button" class=" btn btn-outline-primary active" data-filter="all">Toutes</button>
+                <button type="button" class=" btn btn-outline-primary" data-filter="todo">A faire</button>
+                <button type="button" class=" btn btn-outline-primary" data-filter="done">Faites</button>
+            </div>
+
+            <ul class="list-group">
+            <!---->
+            <li class="todo list-group-item d-flex align-items-center">
+                <input class="form-check-input" type="checkbox" id="todo-1">
+                <label class="ms-2 form-check-label" for="todo-1">
+                    Tâche à faire 2
+                </label>
+                <label class="ms-auto btn btn-danger btn-sm">
+                <i class="bi-trash">
+                </i>
+                </label>
+            </li>
+            <li class="todo list-group-item d-flex align-items-center">
+                <input class="form-check-input" type="checkbox" id="todo-2">
+                <label class="ms-2 form-check-label" for="todo-2">
+                    Tâche à faire 1
+                </label>
+                <label class="ms-auto btn btn-danger btn-sm">
+                <i class="bi-trash">
+                </i>
+                </label>
+            </li>
+            </ul>
+        </main>
+    </section>
+
+</body>
+</html>
+
+
+le dom :
+export function createElement(tagName, attribute = {}){
+    const element = document.createElement(tagName)
+    for (const [attribute, value] of Object.entries(attriutes) ){
+        element.setAttribute(attribute, value )
+
+    }
+    return element 
+}
+
+l'app.js : 
+import { fetchJSON } from "./functions/api.js";
+import { createElement } from "./functions/dom.js";
+
+try{
+    const todos = await fetchJSON('https://jsonplaceholder.typicode.com/todos?_limit=5')
+    console.log(todos)
+    } catch(e){
+        const alertElement = createElement('div',{
+            class:'alert alert-danger m-2',
+            role: 'alert'
+        })
+        alertElement.innerText = "Impossible de charger les éléments"
+        document.body.prepend(alertElement)
+}
+
+JE NE PEUX PAS SUIVRE IL ME MANQUE DES ELEMENT MAIS JE CONTINU LA VIDEO.
+
+ECOUTEUR D'EVENEMENT :
+
+const button = document.querySelector('button')
+button.addEventListener('click',function (){
+    alert('Bonjour')
+})
+
+syntaxe de base 
+
+
+const button = document.querySelector('button')
+button.addEventListener('click',function (){
+    console.log(event.target, event.currentTarget)
+})
+
+le target va donner la cible sur laquel on a veritablement clicker 
+
+currentTarget va toujours donner le sujet du lsitener vu que addEventListener sur le button alors ça renvoye le button.
+
+function onButtonClick (event){
+    console.log(event.currentTarget)
+}
+document.querySelectorAll('button').forEach(button => {
+    button.addEventListener('click', onButtonClick)
+});
+
+preventdefault :
+
+function onButtonClick (event){
+    event.preventDefault()
+}
+document.querySelectorAll('button, a').forEach(button => {
+    button.addEventListener('click', onButtonClick)
+});
+
+on empeche le comportement des event qui dans cette exemple c'est de rediriger vers le lien.
+
+stoppropagation : 
+
+function onButtonClick (event){
+    console.log('button click')
+    event.preventDefault()
+    event.stopPropagation()
+}
+document.querySelectorAll('button, a').forEach(button => {
+    button.addEventListener('click', onButtonClick)
+})
+
+
+document.querySelector('div').addEventListener('click', () => {
+    console.log('click div')
+})
+
+
+function onButtonClick (event){
+    console.log('button click')
+    event.preventDefault()
+    event.stopPropagation()
+}
+document.querySelectorAll('button, a').forEach(button => {
+    button.addEventListener('click', onButtonClick)
+})
+
+
+document.querySelector('div').addEventListener('click', () => {
+    console.log('click div')
+})
+
+
+revealSpoiler : ça revel tout les poiler 
+
+
+TEMPLATE :
+
+Un template sert a stocké du contenu HTML qui ne doit pas etre affiché lors du chargement de la page mais qui peut etre instancié et affiché par la suite grâce a un script JavaScript.
+
+content.cloneNode : clone le contenu du fragment 
+
+
+.content donne le contenu du template 
+
+
+EVENEMENT PERSONNALISE :
+
+detail : pour envoyer des informations.
+
+bubbles pour propager les element 
+
+cancelable : nous dis si on peut annulé des comportement par défaults.
+
+localStorage.setItem('hello','bonjour)
+ça sauvegarde
+
+localStorage.getItem('ce qu'on veut récupérer')
+
+pour recupérer avant le rafraichissement d'une page.
+
+
+dans l'application il y a le local storage en mieux 
+
+pas de sécurité 
+
+localStorage.clear tout supprimer 
+
+localStorage.removeItem un element en particulier .
+
+sessionStorage ça sauvegarde que dans la session de la plage si on reouvre la page y'a plus alors qu'avec le localstorage ça reste
+
+
+LES COOCKIES :
+
+
+Des informations qui vont pouvoir être stocker sur le navigateur de l'utilisateur et qui vont être envoyer a userveur .
 
 
 
